@@ -8,7 +8,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import BadgeNew from "./pages/BadgeNew.js";
-import Badge from "./components/Badge.js";
+//import Badge from "./components/Badge.js";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "./global.css";

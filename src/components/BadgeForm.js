@@ -2,27 +2,21 @@ import React from "react";
 
 class BadgeForm extends React.Component {
   //Inicializamos los inputs de nuestro formulario con un objeto vacio
-  state = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    jobTitle: "",
-    twitter: "",
-  };
+  state = {};
 
   //funcion que maneja los cambios en el input field
-  handleChange = (e) => {
+  /*   handleChange = (e) => {
     /* console.info({
       name: e.target.name,
       value: e.target.value,
     }); */
 
-    //Almacenamos la información contenida en los inputs
-    this.setState({
+  //Almacenamos la información contenida en los inputs
+  /* this.setState({
       //almacenamos el estado (informacion) en su campo rspectivo pudiendo ser: firstName, lastName, email. jobTitle etc
       [e.target.name]: e.target.value,
     });
-  };
+  }; */
 
   //funcion que maneja el evento click del button
   handleClick = (e) => {
@@ -49,7 +43,7 @@ class BadgeForm extends React.Component {
               className="form-control"
               type="text"
               name="firstName"
-              onChange={this.handleChange}
+              onChange={this.props.onChange}
               //hacemos que la propiedad value sea controled indicamos que almacene solo el contenido de su input
               //es importante establecer esta propiedad de lo contrario se guardaria la informacion del input en dos lugares
               value={this.state.firstName}
@@ -60,7 +54,7 @@ class BadgeForm extends React.Component {
               className="form-control"
               type="text"
               name="lastName"
-              onChange={this.handleChange}
+              onChange={this.props.onChange}
               value={this.state.lastName}
             />
 
@@ -69,7 +63,7 @@ class BadgeForm extends React.Component {
               className="form-control"
               type="email"
               name="email"
-              onChange={this.handleChange}
+              onChange={this.props.onChange}
               value={this.state.email}
             />
 
@@ -78,7 +72,7 @@ class BadgeForm extends React.Component {
               className="form-control"
               type="text"
               name="jobTitle"
-              onChange={this.handleChange}
+              onChange={this.props.onChange}
               value={this.state.jobTitle}
             />
 
@@ -87,7 +81,7 @@ class BadgeForm extends React.Component {
               className="form-control"
               type="text"
               name="twitter"
-              onChange={this.handleChange}
+              onChange={this.props.onChange}
               value={this.state.twitter}
             />
           </div>
