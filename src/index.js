@@ -7,7 +7,7 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import Badges from "./pages/Badges.js";
+import App from "./components/App.js";
 
 //import Badge from "./components/Badge.js";
 //import BadgeNew from "./pages/BadgeNew.js";
@@ -34,6 +34,6 @@ ReactDOM.render(
     twitter="harpazos"
     avatarUrl="https://www.gravatar.com/avatar?d=identicon"
   />, */
-  <Badges />,
+  <App />,
   container
 );
