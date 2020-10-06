@@ -7,8 +7,8 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/badges" component={Badges}></Route>
-        <Route path="/badges/new" component={BadgeNew}></Route>
+        <Route exact path="/badges" component={Badges}></Route>
+        <Route exact path="/badges/new" component={BadgeNew}></Route>
       </Switch>
     </BrowserRouter>
   );
