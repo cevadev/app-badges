@@ -2,7 +2,7 @@ import React from "react";
 
 class BadgeForm extends React.Component {
   //Inicializamos los inputs de nuestro formulario con un objeto vacio
-  state = {};
+  //state = {};
 
   //funcion que maneja los cambios en el input field
   /*   handleChange = (e) => {
@@ -46,7 +46,7 @@ class BadgeForm extends React.Component {
               onChange={this.props.onChange}
               //hacemos que la propiedad value sea controled indicamos que almacene solo el contenido de su input
               //es importante establecer esta propiedad de lo contrario se guardaria la informacion del input en dos lugares
-              value={this.state.firstName}
+              value={this.props.formValues.firstName}
             />
 
             <label>Last Name</label>
@@ -55,7 +55,7 @@ class BadgeForm extends React.Component {
               type="text"
               name="lastName"
               onChange={this.props.onChange}
-              value={this.state.lastName}
+              value={this.props.formValues.lastName}
             />
 
             <label>Email</label>
@@ -64,7 +64,7 @@ class BadgeForm extends React.Component {
               type="email"
               name="email"
               onChange={this.props.onChange}
-              value={this.state.email}
+              value={this.props.formValues.email}
             />
 
             <label>Job title</label>
@@ -73,7 +73,7 @@ class BadgeForm extends React.Component {
               type="text"
               name="jobTitle"
               onChange={this.props.onChange}
-              value={this.state.jobTitle}
+              value={this.props.formValues.jobTitle}
             />
 
             <label>twitter</label>
@@ -82,7 +82,7 @@ class BadgeForm extends React.Component {
               type="text"
               name="twitter"
               onChange={this.props.onChange}
-              value={this.state.twitter}
+              value={this.props.formValues.twitter}
             />
           </div>
           <button className="btn btn-primary" onClick={this.handleClick}>

@@ -8,7 +8,13 @@ import "./styles/BadgeNew.css";
 class BadgeNew extends React.Component {
   //inicializamos un state
   state = {
-    form: {},
+    form: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      jobTitle: "",
+      twitter: "",
+    },
   };
 
   //este metodo recibe el evento y luego realiza un setState
@@ -33,15 +39,19 @@ class BadgeNew extends React.Component {
           <div className="row">
             <div className="col-6">
               <Badge
-                firstName="Carlos"
-                lastName="Villanueva"
-                jobTitle="Fullstack developer"
-                twitter="harpazos"
+                firstName={this.state.form.firstName}
+                lastName={this.state.form.lastName}
+                email={this.state.form.email}
+                jobTitle={this.state.form.jobTitle}
+                twitter={this.state.form.twitter}
                 avatarUrl="https://www.gravatar.com/avatar?d=identicon"
               />
             </div>
             <div className="col-6">
-              <BadgeForm onChange={this.handleChange} />
+              <BadgeForm
+                onChange={this.handleChange}
+                formValues={this.state.form}
+              />
             </div>
           </div>
         </div>
