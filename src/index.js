@@ -7,8 +7,10 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import BadgeNew from "./pages/BadgeNew.js";
+import Badges from "./pages/Badges.js";
+
 //import Badge from "./components/Badge.js";
+//import BadgeNew from "./pages/BadgeNew.js";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "./global.css";
@@ -32,6 +34,6 @@ ReactDOM.render(
     twitter="harpazos"
     avatarUrl="https://www.gravatar.com/avatar?d=identicon"
   />, */
-  <BadgeNew />,
+  <Badges />,
   container
 );
