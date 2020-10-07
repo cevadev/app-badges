@@ -1,5 +1,6 @@
 import React from "react";
 import BadgesList from "../components/BadgesList.js";
+import Loader from "../components/Loader";
 import { Link } from "react-router-dom";
 import "./styles/Badges.css";
 
@@ -17,14 +18,23 @@ class Badges extends React.Component {
     console.info("1. constructor()");
 
     //Inicializamos la informacion de lista de badges
-    this.state = {
+    /*  this.state = {
       data: [],
+    }; */
+
+    //para ricky and morty
+    this.state = {
+      data: {
+        loading: true,
+        error: null,
+        results: [],
+      },
     };
   }
 
-  componentDidMount() {
+  /**Simulacion de una peticion. en 3 segundos actualizamos el state con la info contenida en data */
+  /* componentDidMount() {
     console.info("3. componentDidMount()");
-    /**Simulacion de una peticion. en 3 segundos actualizamos el state con la info contenida en data */
     this.timeoutId = setTimeout(() => {
       this.setState({
         data: [
@@ -70,12 +80,36 @@ class Badges extends React.Component {
       prevState: prevState,
     });
 
-    /**lo comparamos con los valores actuales */
+   
     console.info({
       props: this.props,
       state: this.state,
     });
+  } */
+  /**Hacemos la llamada a la API */
+  componentDidMount() {
+    this.fetchCharacters();
   }
+
+  fetchCharacters = async () => {
+    this.setState({ loading: true, error: null });
+    try {
+      const response = await fetch(
+        "https://rickandmortyapi.com/api/character/"
+      );
+      //a response le sacamos los datos
+      const data = await response.json();
+      this.setState({
+        loading: false,
+        data: data,
+      });
+    } catch (error) {
+      this.setState({
+        loading: false,
+        error: error,
+      });
+    }
+  };
 
   /**este metodo se ejecuta antes de que el componente se desmonte del DOM. esto se llama cuando pasamos a otra pagina
    * o componente
@@ -86,6 +120,10 @@ class Badges extends React.Component {
   }
 
   render() {
+    if (this.state.error) {
+      return `Error: ${this.state.error.message}`;
+    }
+
     console.info("2. render()");
     return (
       <React.Fragment>
@@ -109,11 +147,20 @@ class Badges extends React.Component {
           </div>
         </div>
 
+        {/* <BadgesList badges={this.state.data} /> */}
+
         <div className="Badges__list">
           <div className="Badges__container">
-            <BadgesList badges={this.state.data} />
+            <BadgesList badges={this.state.data.results} />
           </div>
         </div>
+
+        {/**expresion dentro de JSX */}
+        {this.state.loading && (
+          <div>
+            <Loader />
+          </div>
+        )}
       </React.Fragment>
     );
   }
