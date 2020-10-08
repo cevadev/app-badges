@@ -5,20 +5,30 @@ import "./styles/Badges.css";
 import confLogo from "../images/badge-header.svg";
 import BadgesOriginalList from "../components/BadgeOriginalList";
 
+import PageLoading from "../components/PageLoading";
+import PageError from "../components/PageError";
+
+import api from "../api";
+
 class BadgesOriginal extends React.Component {
   constructor(props) {
     super(props);
     console.log("1. constructor()");
 
     this.state = {
-      data: [],
+      loading: true, //es true ya que al inicio estara cargando los datos
+      error: null,
+      data: undefined, // aun no tenemos datos
     };
   }
 
+  /**ComponentDidMont es el mejor lugar para iniciar la peticion a una api */
   componentDidMount() {
     console.log("3. componentDidMount()");
+    //hacemos la peticion de los datos
+    this.fetchData();
 
-    this.timeoutId = setTimeout(() => {
+    /* this.timeoutId = setTimeout(() => {
       this.setState({
         data: [
           {
@@ -53,8 +63,22 @@ class BadgesOriginal extends React.Component {
           },
         ],
       });
-    }, 3000);
+    }, 3000); */
   }
+
+  fetchData = async () => {
+    //establecemos el estado
+    this.setState({ loading: true, error: null });
+    //iniciamos la llamada a la API
+    try {
+      //preparamos el entorno para la llamada
+      const data = await api.badges.list();
+      //guardamos los datos en el state y actualizamos la propiedad loading
+      this.setState({ loading: false, data: data });
+    } catch (error) {
+      this.setState({ loading: false, error: error });
+    }
+  };
 
   componentDidUpdate(prevProps, prevState) {
     console.log("5. componentDidUpdate()");
@@ -75,6 +99,18 @@ class BadgesOriginal extends React.Component {
   }
 
   render() {
+    //manejamos el caso donde el loading es true
+    if (this.state.loading === true) {
+      return <PageLoading />;
+    }
+
+    //manejamos el caso donde se produce un error en el retorno de datos del api
+    if (this.state.error) {
+      //al error le pasamos un props
+      return <PageError error={this.state.error} />;
+      //return `Error: ${this.state.error.message}`;
+    }
+
     console.log("2/4. render()");
     return (
       <React.Fragment>
