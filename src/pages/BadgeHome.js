@@ -12,8 +12,13 @@ function BadgeHome() {
         <img src={logo} alt="" />
         <h1>BADGE MANAGEMENT SYSTEM</h1>
         <p>
+          <Link className="btn btn-primary" to="/badgesOriginal">
+            Start Badges Original
+          </Link>
+        </p>
+        <p>
           <Link className="btn btn-primary" to="/badges">
-            Start
+            Start Badges
           </Link>
         </p>
       </div>

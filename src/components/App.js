@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Badges from "../pages/Badges";
+import BadgesOriginal from "../pages/BadgesOriginal";
 import BadgeNew from "../pages/BadgeNew";
 import NotFound from "../pages/NotFound";
 import Layout from "./Layout";
@@ -13,6 +14,11 @@ function App() {
         <Switch>
           <Route exact path="/" component={BadgeHome}></Route>
           <Route exact path="/badges" component={Badges}></Route>
+          <Route
+            exact
+            path="/badgesOriginal"
+            component={BadgesOriginal}
+          ></Route>
           <Route exact path="/badges/new" component={BadgeNew}></Route>
           <Route exact path="/notfound" component={NotFound}></Route>
         </Switch>

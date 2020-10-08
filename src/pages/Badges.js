@@ -24,9 +24,11 @@ class Badges extends React.Component {
 
     //para ricky and morty
     this.state = {
-      data: {
-        loading: true,
-        error: null,
+      currentPage: 1,
+      lastPage: 1,
+      loading: true,
+      error: null,
+      datos: {
         results: [],
       },
     };
@@ -95,13 +97,13 @@ class Badges extends React.Component {
     this.setState({ loading: true, error: null });
     try {
       const response = await fetch(
-        "https://rickandmortyapi.com/api/character/"
+        `https://rickandmortyapi.com/api/character/?page=${this.state.currentPage}`
       );
       //a response le sacamos los datos
       const data = await response.json();
       this.setState({
-        loading: false,
-        data: data,
+        datos: data,
+        lastPage: data.info.pages,
       });
     } catch (error) {
       this.setState({
@@ -109,7 +111,34 @@ class Badges extends React.Component {
         error: error,
       });
     }
+
+    setTimeout(() => {
+      this.setState({
+        loading: false,
+      });
+    }, 1000);
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(`5 componentDidUpdate`);
+    if (this.state.currentPage !== prevState.currentPage) {
+      this.fetchCharacters();
+    }
+  }
+
+  async nextPage(n) {
+    await this.setState({
+      currentPage: this.state.currentPage + 1,
+    });
+    // await this.fetchCaracters()
+  }
+
+  async prevPage() {
+    await this.setState({
+      currentPage: this.state.currentPage - 1,
+    });
+    // await this.fetchCaracters()
+  }
 
   /**este metodo se ejecuta antes de que el componente se desmonte del DOM. esto se llama cuando pasamos a otra pagina
    * o componente
@@ -145,22 +174,54 @@ class Badges extends React.Component {
               New Badge
             </Link>
           </div>
+
+          <div className="Badge__list">
+            {!this.state.loading && (
+              <div className="btn-container">
+                <button
+                  className="btn btn-primary"
+                  onClick={() => this.prevPage()}
+                  type="button"
+                  disabled={this.state.currentPage === 1}
+                >
+                  Prev
+                </button>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => this.nextPage()}
+                  type="button"
+                  disabled={this.state.currentPage === this.state.lastPage}
+                >
+                  Next
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* <BadgesList badges={this.state.data} /> */}
 
         <div className="Badges__list">
           <div className="Badges__container">
-            <BadgesList badges={this.state.data.results} />
+            <BadgesList badges={this.state.datos.results} />
           </div>
         </div>
 
         {/**expresion dentro de JSX */}
-        {this.state.loading && (
-          <div>
-            <Loader />
+        {this.state.loading && <Loader />}
+
+        {/* {!this.state.loading && (
+          <div className="row mb-5">
+            <div className="col text-center">
+              <button
+                className="btn btn-primary w-100"
+                onClick={() => this.fetchCharacters()}
+              >
+                Load More
+              </button>
+            </div>
           </div>
-        )}
+        )} */}
       </React.Fragment>
     );
   }
