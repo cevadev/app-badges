@@ -33,6 +33,9 @@ const api = {
       //throw new Error("500: Server error");
     },
     create(badge) {
+      //Simulamos el lanzamiento de un error, este error será interceptado por el componente BadgesOriginal en el catch
+      //throw new Error("500: Server error");
+
       return callApi(`/badges`, {
         method: "POST",
         body: JSON.stringify(badge),

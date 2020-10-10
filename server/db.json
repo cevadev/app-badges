@@ -47,19 +47,11 @@
     },
     {
       "firstName": "Carlos Eduardo",
-      "lastName": "Altuna",
+      "lastName": "Villanueva Altuna",
       "email": "carlos.villanueva.altuna@gmail.com",
-      "jobTitle": "software developer",
-      "twitter": "harpazos",
-      "id": "EuYCbtT"
-    },
-    {
-      "firstName": "Manuel",
-      "lastName": "Gonzalez",
-      "email": "manuel.gonzalez@gmail.com",
       "jobTitle": "Developer",
-      "twitter": "@manug",
-      "id": "2Iz_8xS"
+      "twitter": "harpazos",
+      "id": "CUZLAyy"
     }
   ]
 }

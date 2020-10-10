@@ -28,7 +28,7 @@ class BadgesOriginalListItem extends React.Component {
 
 class BadgesOriginalList extends React.Component {
   render() {
-    /**validamos si vienen datos vaciones */
+    /**validamos si vienen datos vacios */
     if (this.props.badges.length === 0) {
       return (
         <div>
@@ -41,6 +41,7 @@ class BadgesOriginalList extends React.Component {
     }
 
     return (
+      
       <div className="BadgesList">
         <ul className="list-unstyled">
           {this.props.badges.map((badge) => {

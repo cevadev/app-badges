@@ -9,7 +9,8 @@ import api from "../api";
 
 import "./styles/BadgeNew.css";
 class BadgeNew extends React.Component {
-  //inicializamos un state. el loading significa que estamos enviado los datos y al inicio su estado es false
+  //inicializamos un state. el loading significa que estamos enviado los datos y al momento de estar el
+  //form en blanco suestado es false
   state = {
     loading: false,
     error: null,
@@ -32,7 +33,8 @@ class BadgeNew extends React.Component {
     });
   };
 
-  //metodo para enviar datos de un nuevo badge
+  //metodo para enviar datos de un nuevo badge al servidor.
+  //Si sucede un error, atrapamos el error y lo mostramos en el formulario y no como una pagina como en otros casos
   handleSubmit = async (e) => {
     //detenemos primero el evento de lo contario el navegador trata de enviar los datos a una pagina que no hemos especificado
     e.preventDefault();
@@ -40,6 +42,14 @@ class BadgeNew extends React.Component {
     try {
       await api.badges.create(this.state.form); //le pasamos los datos del formulario
       this.setState({ loading: false });
+
+      //si todo es un éxito, es decir, se envian correctamente los datos, nos queremos ir del formulario
+      //y regresar automáticamente a la lista de badges, para hacer esto debemos utilizar un props que las páginas reciben
+      //ya que las paginas se la damos a las rutas de React router y la ruta le pasa 3 props: match, history y location
+      //utilizamos history y redirigimos al usuario a badgesOrinal
+      this.props.history.push('/badgesOriginal');
+
+
     } catch (error) {
       this.setState({ loading: false, error: error });
     }
@@ -78,6 +88,7 @@ class BadgeNew extends React.Component {
                 onChange={this.handleChange}
                 onSubmit={this.handleSubmit}
                 formValues={this.state.form}
+                error={this.state.error}
               />
             </div>
           </div>
