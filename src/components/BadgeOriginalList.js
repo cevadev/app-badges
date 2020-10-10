@@ -28,6 +28,8 @@ class BadgesOriginalListItem extends React.Component {
 
 class BadgesOriginalList extends React.Component {
   render() {
+    let badgesList=null;
+
     /**validamos si vienen datos vacios */
     if (this.props.badges.length === 0) {
       return (
@@ -39,12 +41,18 @@ class BadgesOriginalList extends React.Component {
         </div>
       );
     }
+    else{
+      //cuando almacenamos un nuevo badge este se va al final de lista con reverse() hacemos que el ultimo figure primero
+      //si no queremos esas funcionalidad solo escribimos
+      //this.props.badges.map(badge) en el return de abajo
+      badgesList = [...this.props.badges].reverse();
+    }
 
     return (
       
       <div className="BadgesList">
         <ul className="list-unstyled">
-          {this.props.badges.map((badge) => {
+          {badgesList.map((badge) => {
             return (
               <li key={badge.id}>
                 <BadgesOriginalListItem badge={badge} />
