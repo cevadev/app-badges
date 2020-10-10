@@ -9,12 +9,14 @@ import api from "../api";
 
 import Swal from 'sweetalert';
 
-import "./styles/BadgeNew.css";
-class BadgeNew extends React.Component {
-  //inicializamos un state. el loading significa que estamos enviado los datos y al momento de estar el
-  //form en blanco suestado es false
+import "./styles/BadgeEdit.css";
+class BadgeEdit extends React.Component {
+    /**Cuando se cargue la pagina BadgeEdit necesitamos traer del servidor los datos del badge seleccionado
+     * por lo tanto debemos hacer una peticion
+     * Ya que iniciamos con una peticion el loading es true
+     */
   state = {
-    loading: false,
+    loading: true,
     error: null,
     form: {
       firstName: "",
@@ -25,6 +27,31 @@ class BadgeNew extends React.Component {
     },
   };
 
+   /** */
+  componentDidMount(){
+      this.fetchData();
+  }
+
+  fetchData = async(e) =>{
+      this.setState({loading: true, error: null});
+      try{
+          /**el metod read() toma el id del badge que nos interes
+           * recordemos que el id esta contenido en la url
+           * con react router podemos leer ese id por medio de un props que el router le pasa a los componentes, elprops es:
+           * this.props.match -> cada una de las variables que insertamos en el path que declaramos en la ruta lo pdemos acceder
+           * dentro del objeto params
+           */
+          const data = await api.badges.read(this.props.match.params.badgeId);
+          //si el path es correcto, guardamos todos los datos del badgeId dentro del form para que se visualicen
+          //ya que es en el form donde estamos colocando los datos del badge
+          this.setState({loading: false, form: data});
+      }
+      catch(error){
+          this.setState({loading: false, error: error})
+      }
+  };
+
+
   //este metodo recibe el evento y luego realiza un setState
   handleChange = (e) => {
     this.setState({
@@ -34,7 +61,7 @@ class BadgeNew extends React.Component {
       },
     });
   };
-
+ 
   /**Manejamos la alerta de error con la dependencia sweet alter */
   alertaFaltanDatos(faltantes){
     Swal({
@@ -125,9 +152,9 @@ class BadgeNew extends React.Component {
 
     return (
       <React.Fragment>
-        <div className="BadgeNew__hero">
+        <div className="BadgeEdit__hero">
           <img
-            className="BadgeNew__hero-image img-fluid"
+            className="BadgeEdit__hero-image img-fluid"
             src={header}
             alt="Logo"
           />
@@ -160,4 +187,4 @@ class BadgeNew extends React.Component {
   }
 }
 
-export default BadgeNew;
+export default BadgeEdit;

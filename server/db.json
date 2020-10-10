@@ -60,6 +60,14 @@
       "jobTitle": "Engineer",
       "twitter": "pedro.alfaro",
       "id": "LEVkIar"
+    },
+    {
+      "firstName": "Manuel",
+      "lastName": "Garcia",
+      "email": "manuel.garcia@gmail.com",
+      "jobTitle": "Developer",
+      "twitter": "manuel.garcia",
+      "id": "Hi6yNtp"
     }
   ]
 }
