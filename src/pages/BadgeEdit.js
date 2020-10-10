@@ -81,8 +81,8 @@ class BadgeEdit extends React.Component {
 
   alertaExitosa(){
     Swal({
-      title: 'Creación exitosa',
-      text: 'Muchas gracias por inscribirse a la conferencia',
+      title: 'Actualización exitosa',
+      text: 'Muchas gracias por Actualizar sus datos',
       icon: 'success',
     }).then((result)=>{
       if(result.value || !result.value){
@@ -125,7 +125,7 @@ class BadgeEdit extends React.Component {
       //this.setState({ loading: true, error: null });
 
       try {
-        await api.badges.create(this.state.form); //le pasamos los datos del formulario
+        await api.badges.update(this.props.match.params.badgeId, this.state.form); //le pasamos el badgeid los datos del formulario
         this.setState({ loading: false });
         this.alertaExitosa();
 
@@ -173,6 +173,7 @@ class BadgeEdit extends React.Component {
               />
             </div>
             <div className="col-6">
+              <h1>Edit Attendant</h1>
               <BadgeForm
                 onChange={this.handleChange}
                 onSubmit={this.handleSubmit}
