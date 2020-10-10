@@ -1,6 +1,7 @@
 import React from "react";
 import Badge from "../components/Badge.js";
 import BadgeForm from "../components/BadgeForm.js";
+import PageLoading from '../components/PageLoading';
 import header from "../images/platziconf-logo.svg";
 
 //llamamos al api para hacer una llamada a POST
@@ -8,8 +9,10 @@ import api from "../api";
 
 import "./styles/BadgeNew.css";
 class BadgeNew extends React.Component {
-  //inicializamos un state
+  //inicializamos un state. el loading significa que estamos enviado los datos y al inicio su estado es false
   state = {
+    loading: false,
+    error: null,
     form: {
       firstName: "",
       lastName: "",
@@ -42,7 +45,12 @@ class BadgeNew extends React.Component {
     }
   };
 
+  /**En el caso de que el loading se encienda no queremos regresar el formulario, vamos a regresar el componente loader */
   render() {
+    if(this.state.loading){
+      return <PageLoading />
+    }
+
     return (
       <React.Fragment>
         <div className="BadgeNew__hero">
