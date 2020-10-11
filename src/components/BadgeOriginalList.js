@@ -48,6 +48,7 @@ class BadgesOriginalList extends React.Component {
       badgesList = [...this.props.badges].reverse();
     }
 
+    //al hacer click en algun elemento de la lista nos dirigimos a la información detallada del Badge
     return (
       
       <div className="BadgesList">
@@ -55,7 +56,7 @@ class BadgesOriginalList extends React.Component {
           {badgesList.map((badge) => {
             return (
               <li key={badge.id}>
-                <Link className="text-reset text-decoration-none" to={`/badges/${badge.id}/edit`}>
+                <Link className="text-reset text-decoration-none" to={`/badges/${badge.id}`}>
                   <BadgesOriginalListItem badge={badge} />
                 </Link>
                 

@@ -43,6 +43,9 @@ const api = {
     },
     read(badgeId) {
       return callApi(`/badges/${badgeId}`);
+
+      //Simulamos el lanzamiento de un error, este error será interceptado por el componente BadgesOriginal en el catch
+      //throw new Error("500: Server error");
     },
     update(badgeId, updates) {
       return callApi(`/badges/${badgeId}`, {
