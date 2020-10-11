@@ -1,51 +1,16 @@
 import React from 'react';
-import confLogo from '../images/platziconf-logo.svg';
-import Badge from '../components/Badge';
-import PageLoading from '../components/PageLoading';
-import PageError from '../components/PageError';
-import api from '../api';
 
+import confLogo from '../images/platziconf-logo.svg';
 import { Link } from 'react-router-dom';
+import Badge from '../components/Badge';
+import DeletBadgeModal from '../components/DeleteBadgeModal';
 
 import './styles/BadgeDetails.css';
-class BadgeDetails extends React.Component{
-    state = {
-        loading: true,
-        error: null,
-        data: undefined
-    }
 
-    componentDidMount(){
-        this.fetchData();
-    }
-
-    fetchData = async()=>{
-        this.setState({loading: true, error: null})
-        try{
-            //le pasamos el badgeId para recuperar el Badge
-            const data = await api.badges.read(this.props.match.params.badgeId);
-            //actualizamos el estado
-            this.setState({loading: false, data: data});
-        }catch(error)
-        {
-            this.setState({loading: false, error: error});
-        }
-    }
-
-    render(){
-        //validaciones
-        if(this.state.loading){
-            return <PageLoading />
-        }
-
-        if(this.state.error){
-            return <PageError error={this.state.error}/>
-        }
-
-        const BadgeData = this.state.data;
-
-        return(
-            <div>
+function BadgeDetails(props){
+    const BadgeData = props.badge
+    return(
+        <div>
                 <div className="BadgeDetails__hero">
                     <div className="container">
                         <div className="row">
@@ -71,15 +36,17 @@ class BadgeDetails extends React.Component{
                                     <Link className="btn btn-primary mb-4" to={`/badges/${BadgeData.id}/edit`}>Edit</Link>
                                 </div>
                                 <div>
-                                    <button className="btn btn-danger">Delete</button>
+                                    <button onClick={props.onOpenModal} className="btn btn-danger">Delete</button>
+                                    <DeletBadgeModal isOpen={props.modalIsOpen} onClose={props.onCloseModal}
+                                        onDeleteBadge={props.onDeleteBadge}
+                                    />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        )
-    }
+    )
 }
 
 export default BadgeDetails
