@@ -7,7 +7,28 @@ import DeletBadgeModal from '../components/DeleteBadgeModal';
 
 import './styles/BadgeDetails.css';
 
+/**Hook personalizado */
+function useIncreaseCount(max){
+    const [count, setCount] = React.useState(0);//inicializamos en 0
+
+    if(count > max){
+        setCount(0);
+    }
+
+    return [count, setCount];
+
+}//fin del Hook personalizado
+
 function BadgeDetails(props){
+    //const count = 3;
+
+    /**utilizamos Hools */
+    //nosotros indicamos la propiedad
+    const [count, setCount] = useIncreaseCount(4);
+    //const [count, setCount] = React.useState(0)//inicializamos el state
+    // fin de hooks
+
+
     const BadgeData = props.badge
     return(
         <div>
@@ -33,6 +54,11 @@ function BadgeDetails(props){
                             <h2>Actions</h2>
                             <div>
                                 <div>
+
+                                    <button onClick={()=>{
+                                        setCount(count+1)
+                                    }} className="btn btn-primary mr-4">Increase count {count}</button>
+
                                     <Link className="btn btn-primary mb-4" to={`/badges/${BadgeData.id}/edit`}>Edit</Link>
                                 </div>
                                 <div>
