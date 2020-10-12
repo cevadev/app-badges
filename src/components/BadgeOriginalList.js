@@ -27,30 +27,44 @@ class BadgesOriginalListItem extends React.Component {
 }
 
 /**
- * Para crear un buscador de badges vamos a utilizar Hooks, pero lo Hooks solo funcionan dentro de 
- * componentes funcion y no dentro de clases, por lo que debemos convertir
- * class BadgesOriginalList extends React.Component   en una function
- * quitamos el metodo render(){}
+ * Custom Hook 
  */
-function BadgesOriginalList(props) {
-
-    const badges = props.badges;
-    //let badgesList=null;
-
-    /**
+function useSearchBadges(badges){
+  /**
      * Usamos useState
      * query -> lo que se escribe en la caja
      * setQuery() -> establecemos el valor
      * Para hacer el filtrado haremos una combinación entre la lista de los badges y el query
      */
     const [ query, setQuery] = React.useState('');
-    //guardamos el resultado de los badges filtrados
-    let filteredBadgesList = badges.filter( badge=>{
-      //los badges que se deben retornar son los que se coincidan con nombre y apellido en el query
-      return `${badge.firstName} ${badge.lastName}`.toLowerCase().includes(query.toLowerCase());
-    });
+    const [ filteredBadgesList, setFilteredBadgesList] = React.useState(badges);
+    //guardamos el resultado de los badges filtrados 
+    React.useMemo(
+      ()=> { 
+              const result = badges.filter( badge=>
+                {
+                  //los badges que se deben retornar son los que se coincidan con nombre y apellido en el query
+                  return `${badge.firstName} ${badge.lastName}`.toLowerCase().includes(query.toLowerCase());
+                }
+            );
+            setFilteredBadgesList(result);
+        }, [ badges, query]
+    );
+    return {query, setQuery, filteredBadgesList};
+}
+// fin custom hook useSearchBadges
 
-    //fin Hook
+/**
+ * Para crear un buscador de badges vamos a utilizar Hooks, pero lo Hooks solo funcionan dentro de 
+ * componentes funcion y no dentro de clases, por lo que debemos convertir
+ * class BadgesOriginalList extends React.Component   en una function
+ * quitamos el metodo render(){}
+ */
+function BadgesOriginalList(props) {
+    const badges = props.badges;
+
+    //llamamos al custom hook
+    const { query, setQuery, filteredBadgesList } = useSearchBadges(badges);
 
     /**validamos si vienen datos vacios */
     if (filteredBadgesList.length === 0) {
